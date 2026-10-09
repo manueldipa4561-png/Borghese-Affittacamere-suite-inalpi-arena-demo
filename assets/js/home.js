@@ -10,6 +10,7 @@ const { lenis } = initSite();
 const SLIDE_MS = 3400;
 const FONT_WAIT_MS = 700;
 const LOADER_SAFETY_MS = 5000;
+const SLOW_START_MS = 1800;
 const ROOM_DOTS = { Salvia: "#7fa874", Turchese: "#2bb3c4", Cipria: "#e79a8c", Ardesia: "#3b4349" };
 
 initQuickbook();
@@ -52,6 +53,12 @@ if (!gsap || !ScrollTrigger) {
 function runLoader() {
   const loader = document.querySelector(".loader");
   if (!loader) return Promise.resolve();
+  // connessione lenta o pagina già in ritardo: niente contatore, si va dritti all'hero
+  const conn = navigator.connection;
+  if (performance.now() > SLOW_START_MS || conn?.saveData || /2g|3g/.test(conn?.effectiveType ?? "")) {
+    loader.remove();
+    return Promise.resolve();
+  }
   const html = document.documentElement;
   const unlock = () => { html.classList.remove("is-loading"); lenis?.start(); };
   html.classList.add("is-loading");
@@ -87,7 +94,11 @@ function prepareHero() {
 
 function heroScroll() {
   const hero = document.querySelector("[data-hero]");
-  gsap.timeline({ scrollTrigger: { trigger: hero, start: "top top", end: "+=110%", pin: true, scrub: 1 } })
+  // su mobile niente pin: il primo swipe deve scorrere la pagina, non solo animare la foto
+  const trigger = innerWidth > 900
+    ? { trigger: hero, start: "top top", end: "+=110%", pin: true, scrub: 1 }
+    : { trigger: hero, start: "top top", end: "bottom top", scrub: true };
+  gsap.timeline({ scrollTrigger: trigger })
     .fromTo(hero.querySelector("[data-hero-media]"), { "--open": 0 }, { "--open": 1, ease: "power2.inOut" }, 0)
     .to("[data-hero-word]", { yPercent: 40, opacity: 0, ease: "power1.in" }, 0)
     .to(".hero__top, .hero__foot", { y: -40, opacity: 0, ease: "power1.in" }, 0);
@@ -110,10 +121,25 @@ function initSlideshow() {
     dot.style.setProperty("--dot", ROOM_DOTS[slide.dataset.room]);
     hero.style.setProperty("--hero-tint", slide.dataset.tint);
   };
-  const tick = () => visible && !document.hidden && show(index + 1);
+  let paused = false;
+  const tick = () => visible && !paused && !document.hidden && show(index + 1);
   new IntersectionObserver(([entry]) => (visible = entry.isIntersecting)).observe(hero);
   show(0);
+  pauseButton("[data-pause-slides]", (on) => (paused = on));
   return { start: () => !reducedMotion && !timer && (timer = setInterval(tick, SLIDE_MS)) };
+}
+
+// pulsante Pausa/Riprendi per i contenuti che si muovono da soli (WCAG 2.2.2)
+function pauseButton(selector, onToggle) {
+  const btn = document.querySelector(selector);
+  if (!btn) return;
+  if (reducedMotion) return (btn.hidden = true); // con reduced-motion non si muove nulla
+  btn.addEventListener("click", () => {
+    const on = btn.getAttribute("aria-pressed") !== "true";
+    btn.setAttribute("aria-pressed", String(on));
+    btn.textContent = on ? "Riprendi" : "Pausa";
+    onToggle(on);
+  });
 }
 
 // ---------- reveals
@@ -219,6 +245,7 @@ function counters() {
 // ---------- recensioni: marquee infinito (duplica le card, nascoste ai lettori di schermo)
 function initQuotes() {
   const track = document.querySelector("[data-quotes]");
+  pauseButton("[data-pause-quotes]", (on) => document.getElementById("quotes").classList.toggle("is-paused", on));
   if (!track || reducedMotion) return;
   [...track.children].forEach((card) => {
     const clone = card.cloneNode(true);
