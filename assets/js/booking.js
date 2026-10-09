@@ -205,9 +205,13 @@ function renderSummary() {
   $("[data-sum-out]").textContent = state.checkOut ? longDate(state.checkOut) : "—";
   $("[data-sum-guests]").textContent = `${state.adults} ${state.adults === 1 ? "adulto" : "adulti"}${state.crib ? " + culla" : ""}`;
   const price = $("[data-sum-price]");
+  const mobileTotal = $("[data-mobile-total]");
   price.hidden = !(room && state.checkIn && state.checkOut);
+  mobileTotal.hidden = price.hidden || state.done;
   if (price.hidden) return;
   const q = quote(room, state.checkIn, state.checkOut);
+  $("[data-mt-label]").textContent = `${room.name} · ${q.nights} ${q.nights === 1 ? "notte" : "notti"} · risparmi ${fmtEuro(q.saving)}`;
+  $("[data-mt-total]").textContent = fmtEuro(q.total);
   $("[data-sum-nights]").textContent = `${q.nights} ${q.nights === 1 ? "notte" : "notti"} × ${fmtEuro(q.rate)}`;
   $("[data-sum-sub]").textContent = fmtEuro(q.total);
   $("[data-sum-portal]").textContent = fmtEuro(q.portal);
