@@ -14,7 +14,15 @@ export const PROPERTY = {
   rating: 9.4,
   reviews: 116,
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=Via+Gradisca+83+10136+Torino",
+  reviewsUrl: "https://www.booking.com/hotel/it/borghese-affittacamere-suite-inalpi-arena.html#tab-reviews",
+  // ponytail: contatti segnaposto, un solo punto da cambiare. Il gestore deve fornire quelli veri.
+  phone: "+39 000 000 0000",
+  whatsapp: "390000000000",
+  email: "info@esempio.it",
 };
+
+// Ospiti per camera: letto queen o due singoli, nessun letto aggiunto (Booking.com). Culla 0–2 anni gratuita.
+export const MAX_PER_ROOM = 2;
 
 // Tariffe dimostrative in euro a notte.
 export const ROOMS = [
@@ -31,6 +39,7 @@ export const ROOMS = [
     blurb: "Verde salvia, boiserie in rovere e una striscia di luce che cambia colore sopra la testiera. Si apre su un balcone sulla via.",
     features: ["Balcone", "Bagno privato in marmo", "Doccia walk-in", "Scrivania"],
     images: ["salvia-1", "salvia-3", "salvia-2"],
+    en: { type: "Deluxe double with balcony", features: ["Balcony", "Private marble bathroom", "Walk-in shower", "Desk"] },
   },
   {
     id: "turchese",
@@ -45,6 +54,7 @@ export const ROOMS = [
     blurb: "La camera degli amici e dei colleghi: due letti che diventano uno, poltrona in velluto e un muro turchese che si accende la sera.",
     features: ["Balcone", "Letti separabili", "Bagno privato in marmo", "Poltrona"],
     images: ["turchese-1", "turchese-3", "turchese-2"],
+    en: { type: "Twin room with balcony", features: ["Balcony", "Beds can be joined", "Private marble bathroom", "Armchair"] },
   },
   {
     id: "cipria",
@@ -59,6 +69,7 @@ export const ROOMS = [
     blurb: "Rosa cipria e legno chiaro, specchi esagonali e luce calda radente. La più luminosa, pensata per le coppie.",
     features: ["Bagno privato in marmo", "Doccia walk-in", "Accappatoi", "Smart TV"],
     images: ["cipria-1", "cipria-3", "cipria-2"],
+    en: { type: "Superior double", features: ["Private marble bathroom", "Walk-in shower", "Bathrobes", "Smart TV"] },
   },
   {
     id: "ardesia",
@@ -71,8 +82,9 @@ export const ROOMS = [
     deep: "#e9b48a",
     dark: true,
     blurb: "Grigio ardesia, terracotta e listelli scuri. La camera più raccolta: per chi torna tardi da un concerto e vuole solo buio e silenzio.",
-    features: ["Insonorizzata", "Bagno privato in marmo", "Poltrona in velluto", "Scrivania"],
+    features: ["Bagno privato in marmo", "Poltrona in velluto", "Scrivania", "Specchi esagonali"],
     images: ["ardesia-1", "ardesia-3", "ardesia-4"],
+    en: { type: "Deluxe double", features: ["Private marble bathroom", "Velvet armchair", "Desk", "Hexagon mirrors"] },
   },
 ];
 

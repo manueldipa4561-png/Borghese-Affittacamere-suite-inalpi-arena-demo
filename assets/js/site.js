@@ -1,5 +1,23 @@
-// Comportamenti comuni a tutte le pagine: smooth scroll, nav, menu mobile, ancore, cursore.
+// Comportamenti comuni a tutte le pagine: smooth scroll, nav, menu mobile, ancore, cursore, contatti.
+import { PROPERTY } from "./data.js";
+
 export const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Ogni [data-contact="phone|whatsapp|email"] diventa un link vero, dati presi da data.js
+function fillContacts() {
+  const links = {
+    phone: { href: `tel:${PROPERTY.phone.replace(/\s/g, "")}`, text: PROPERTY.phone },
+    whatsapp: { href: `https://wa.me/${PROPERTY.whatsapp}`, text: "WhatsApp" },
+    email: { href: `mailto:${PROPERTY.email}`, text: PROPERTY.email },
+  };
+  document.querySelectorAll("[data-contact]").forEach((el) => {
+    const link = links[el.dataset.contact];
+    if (!link) return;
+    el.href = link.href;
+    if (!el.dataset.keepText) el.textContent = link.text;
+    if (el.dataset.contact === "whatsapp") Object.assign(el, { target: "_blank", rel: "noopener" });
+  });
+}
 
 const SCROLLED_AT = 40;
 const HIDE_NAV_AFTER = 480;
@@ -21,6 +39,7 @@ export function initSite() {
     }
   }
 
+  fillContacts();
   initNav();
   initMenu(lenis);
   initAnchors(lenis);
@@ -41,7 +60,7 @@ function initNav() {
     nav.classList.toggle("is-scrolled", y > SCROLLED_AT);
     nav.classList.toggle("is-hidden", y > HIDE_NAV_AFTER && y > lastY && !document.body.classList.contains("menu-open"));
     progress?.style.setProperty("--p", max > 0 ? (y / max).toFixed(4) : 0);
-    bookBar?.classList.toggle("is-visible", y > innerHeight * 0.6);
+    bookBar?.classList.toggle("is-visible", y < max - innerHeight * 1.2); // sparisce solo vicino alla CTA finale
     lastY = y;
     ticking = false;
   };
