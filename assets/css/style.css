@@ -44,6 +44,12 @@ a { color: inherit; }
 .mono { font-family: var(--mono); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
 .display { margin: 0; font: 400 clamp(44px, 7.4vw, 128px) / 0.92 var(--serif); letter-spacing: -0.02em; }
 .display em, .hero__lead em { font-style: italic; }
+/* Le maschere di SplitText (div con overflow:clip) sono alte quanto la riga stretta:
+   tagliavano discendenti (g, p), maiuscole e corsivi. Box di clip più grande, layout invariato. */
+[data-hero-word] > div, [data-split] > div, .room__name > div {
+  padding: 0.14em 0.1em 0.24em;
+  margin: -0.14em -0.1em -0.24em;
+}
 .dot { display: inline-block; width: 8px; height: 8px; margin-left: 8px; border-radius: 50%; background: var(--dot, currentColor); vertical-align: middle; }
 
 /* LED strip: il filo di luce sopra le testiere, usato come motivo grafico */
@@ -192,7 +198,7 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
 .room { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5vw; min-height: 100vh; padding: 8vh var(--gutter) 16vh; }
 .room__text { position: sticky; top: calc(var(--nav-h) + 5vh); align-self: start; }
 .room__index { margin: 0; }
-.room__name { margin: 0.12em 0 0.18em; font: 400 clamp(84px, 12.5vw, 220px) / 0.82 var(--serif); letter-spacing: -0.035em; }
+.room__name { margin: 0.12em 0 0.18em; font: 400 clamp(84px, 12.5vw, 220px) / 0.82 var(--serif); letter-spacing: -0.015em; }
 .room__type { margin: 0 0 1.8em; }
 .room__blurb { max-width: 34ch; margin: 0; font-size: clamp(17px, 1.35vw, 21px); line-height: 1.45; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 1.8em 0 2.4em; padding: 0; list-style: none; }

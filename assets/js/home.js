@@ -11,6 +11,7 @@ const SLIDE_MS = 3400;
 const FONT_WAIT_MS = 700;
 const LOADER_SAFETY_MS = 5000;
 const SLOW_START_MS = 1800;
+const REVEAL_FROM = 150; // % sotto la maschera allargata: le lettere non spuntano prima dell'animazione
 const ROOM_DOTS = { Salvia: "#7fa874", Turchese: "#2bb3c4", Cipria: "#e79a8c", Ardesia: "#3b4349" };
 
 initQuickbook();
@@ -84,7 +85,7 @@ function prepareHero() {
   const ui = gsap.utils.toArray(".hero__top > *, .hero__intro > *, .quickbook");
   const chars = SplitText ? SplitText.create("[data-hero-word]", { type: "chars", mask: "chars" }).chars : [];
   gsap.set(media, { "--rise": 1 });
-  gsap.set(chars, { yPercent: 105 });
+  gsap.set(chars, { yPercent: REVEAL_FROM });
   gsap.set(ui, { autoAlpha: 0, y: 24 });
   return gsap.timeline({ paused: true, defaults: { ease: "expo.out" } })
     .to(media, { "--rise": 0, duration: 1.5 }, 0.1)
@@ -147,13 +148,13 @@ function splitReveals() {
   if (!SplitText) return;
   document.querySelectorAll("[data-split]").forEach((el) => {
     const split = SplitText.create(el, { type: "lines", mask: "lines", autoSplit: true, onSplit: (self) =>
-      gsap.from(self.lines, { yPercent: 110, duration: 1.3, stagger: 0.09, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } }),
+      gsap.from(self.lines, { yPercent: REVEAL_FROM, duration: 1.3, stagger: 0.09, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } }),
     });
     return split;
   });
   document.querySelectorAll(".room__name").forEach((el) => {
     const split = SplitText.create(el, { type: "chars", mask: "chars" });
-    gsap.from(split.chars, { yPercent: 100, duration: 1.2, stagger: 0.04, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    gsap.from(split.chars, { yPercent: REVEAL_FROM, duration: 1.2, stagger: 0.04, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 85%" } });
   });
 }
 
