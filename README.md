@@ -9,7 +9,7 @@ Demo of the website for **Borghese Affittacamere suite inalpi arena** (Via Gradi
 | Page | What it does |
 | --- | --- |
 | `index.html` | Home: loader, hero with an arch mask (Turin's porticoes) and a slideshow of the 4 rooms, distances marquee, manifesto, rooms where the background **takes on the colour of the room in view**, horizontal details gallery, terrace with a clip-path reveal, amenities, area map with the LED route to the Inalpi Arena, reviews, "Prenota diretto" CTA. |
-| `prenota.html` | Booking in 4 steps: two-month calendar with availability → room choice by colour → guest details with inline validation → confirmation with a booking code and an `.ics` file for the calendar. Sticky summary showing the saving compared with the portals. Accepts `?arrivo=YYYY-MM-DD&partenza=YYYY-MM-DD&adulti=1-2&camera=salvia\|turchese\|cipria\|ardesia`. |
+| `prenota.html` | Booking in 4 steps, in Italian or English: guests (adults, children, infants) and calendar with availability → **one or more rooms** (up to 4, single booking code) → details (invoice, airport shuttle, late arrival) → confirmation with code and `.ics`. Alternative dates when the chosen ones are full, calendar usable by keyboard. Accepts `?arrivo=YYYY-MM-DD&partenza=YYYY-MM-DD&adulti=1-8&camera=salvia\|turchese\|cipria\|ardesia&lang=it\|en`. |
 | `gestione.html` | Owner area: KPIs (arrivals, occupancy, direct revenue, **commissions saved**), 21-day planning board by room and channel, bookings table with cancellation and demo reset. |
 
 ## Running it locally
@@ -44,6 +44,7 @@ assets/
   img/               WebP photos at 800/1600/2400 px
 tests/store.test.mjs
 docs/ricerca.md      sources, design research, decisions
+docs/persona-test.md test with 15 simulated customers: problems found and fixed
 ```
 
 Libraries (CDN, pinned versions): GSAP 3.13 (ScrollTrigger, SplitText), Lenis 1.1.13. Fonts: Instrument Serif, Geist, Geist Mono (Google Fonts). If the CDNs don't respond the site stays readable without animations, and `prefers-reduced-motion` is respected.
@@ -57,13 +58,14 @@ Libraries (CDN, pinned versions): GSAP 3.13 (ScrollTrigger, SplitText), Lenis 1.
 
 ## To complete with the owner before going live
 
-- [ ] Phone, WhatsApp, email (currently "to be added" in the footer).
+- [ ] Phone, WhatsApp, email: one point to change, `PROPERTY` in `assets/js/data.js` (placeholders today).
 - [ ] Confirm the colour names of the rooms and how they map to the Booking.com types (Deluxe with balcony, Twin with balcony, Superior).
 - [ ] Real rates and a cancellation policy. The current rates are demo values, and the "−10% compared with the portals" is a proposal.
 - [ ] Official photos or permission to use the ones from the listings. The current photos come from the public listings, and 4 have been upscaled to 4K with Higgsfield.
 - [ ] Permission to quote the reviews, or collect new ones directly.
 - [ ] Real backend: database (e.g. Supabase) in place of localStorage, payment (Stripe), confirmation emails, iCal sync with Booking.com during the transition period.
-- [ ] English version (a large share of the guests are foreign) and the privacy/cookie pages.
+- [ ] Lift/step-free access, late check-in, parking, breakfast, shuttle price, tourist tax, cancellation policy, portal prices (see `docs/persona-test.md`).
+- [ ] English version of the home page (booking is already IT/EN) and the privacy/cookie pages.
 
 ## Identification data (from the public listings)
 
