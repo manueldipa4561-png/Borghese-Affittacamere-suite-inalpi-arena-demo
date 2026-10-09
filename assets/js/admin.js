@@ -20,6 +20,8 @@ function h(tag, props = {}, ...children) {
 }
 const roomVars = (room) => ({ "--room": room.color, "--room-fg": room.dark ? "#f3efe6" : "#16181a" });
 const isWeb = (b) => b.channel === "Sito web";
+const CHANNEL_CODE = { "Booking.com": "BKG", Telefono: "TEL", "Sito web": "WEB" };
+const initials = (name) => name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
 function render() {
   const today = todayISO();
@@ -70,11 +72,16 @@ function renderPlan(active, today) {
         const start = b.checkIn < today ? today : b.checkIn;
         const stop = b.checkOut > end ? end : b.checkOut;
         const variant = b.channel === "Booking.com" ? " plan__bar--ota" : isWeb(b) ? " plan__bar--web" : "";
+        const span = nightsBetween(start, stop);
+        // una notte = 34px: niente nomi tagliati, iniziali + sigla del canale (dettagli nel tooltip)
+        const short = span < 2;
+        const label = `${b.guest.name} · ${b.channel} · ${fmtDate(b.checkIn)} → ${fmtDate(b.checkOut)}`;
         grid.append(h("div", {
-          className: `plan__bar${variant}`,
-          title: `${b.guest.name} · ${b.channel} · ${fmtDate(b.checkIn)} → ${fmtDate(b.checkOut)}`,
-          style: { ...roomVars(room), "grid-row": String(row), "grid-column": `${nightsBetween(today, start) + 2} / span ${nightsBetween(start, stop)}` },
-        }, b.guest.name, h("small", { textContent: b.channel })));
+          className: `plan__bar${variant}${short ? " plan__bar--short" : ""}`,
+          title: label,
+          ariaLabel: label,
+          style: { ...roomVars(room), "grid-row": String(row), "grid-column": `${nightsBetween(today, start) + 2} / span ${span}` },
+        }, h("span", { textContent: short ? initials(b.guest.name) : b.guest.name }), h("small", { textContent: span < 3 ? CHANNEL_CODE[b.channel] ?? "" : b.channel })));
       });
   });
   $("[data-plan]").replaceChildren(grid);

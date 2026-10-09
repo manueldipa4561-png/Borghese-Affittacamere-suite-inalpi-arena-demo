@@ -158,9 +158,10 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
 .hero__room { text-align: right; }
 .hero__room b { font: 400 22px/1 var(--serif); text-transform: none; letter-spacing: 0; margin-left: 6px; }
 /* difference: inchiostro sul colore pieno, negativo sopra la foto */
-.hero__title { position: absolute; z-index: 2; left: 0; right: 0; bottom: -0.1em; margin: 0; text-align: center; pointer-events: none; mix-blend-mode: difference; }
+/* bottom in vw (come la scritta): con -0.1em del genitore la coda della "g" finiva sotto l'hero */
+.hero__title { position: absolute; z-index: 2; left: 0; right: 0; bottom: 4.4vw; margin: 0; text-align: center; pointer-events: none; mix-blend-mode: difference; }
 .hero__word { display: block; font: 400 25.4vw/0.8 var(--serif); letter-spacing: -0.035em; color: var(--paper); white-space: nowrap; }
-.hero__foot { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: calc(20.5vw + 12px); display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+.hero__foot { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: calc(24.9vw + 12px); display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
 .hero__intro { max-width: min(30vw, 420px); }
 .hero__lead { margin: 0 0 20px; font: 400 clamp(26px, 2.4vw, 38px) / 1.05 var(--serif); }
 .score { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -340,9 +341,9 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
   .mobile-book.is-visible { transform: none; }
   /* la barra "Prenota diretto" è sempre visibile su mobile: hero alzato per farle spazio */
   .hero__media { --w: 84vw; --t: 18svh; --b: 41svh; }
-  .hero__title { bottom: calc(-0.1em + 86px); }
+  .hero__title { bottom: calc(4.3vw + 76px); }
   .hero__word { font-size: 25vw; }
-  .hero__foot { bottom: calc(21vw + 96px); justify-content: center; text-align: center; }
+  .hero__foot { bottom: calc(25.3vw + 88px); justify-content: center; text-align: center; }
   .info { grid-template-columns: 1fr; }
   .info__head { position: static; }
   .info__en { grid-column: 1; }
