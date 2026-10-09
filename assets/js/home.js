@@ -2,6 +2,9 @@
 import { initSite, reducedMotion } from "./site.js";
 
 const { gsap, ScrollTrigger, SplitText } = window;
+// l'intro parte dall'hero: niente ripristino della posizione dopo un refresh
+history.scrollRestoration = "manual";
+if (!location.hash) scrollTo(0, 0);
 const { lenis } = initSite();
 
 const SLIDE_MS = 3400;
