@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prenota diretto — Borghese, Torino</title>
+  <meta name="description" content="Prenota direttamente una camera da Borghese a Torino: disponibilità in tempo reale, nessuna commissione, conferma immediata.">
+  <meta name="theme-color" content="#f3efe6">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/booking.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body class="page-booking">
+  <a class="skip" href="#main">Salta al contenuto</a>
+  <header class="nav is-scrolled" data-nav>
+    <span class="led nav__progress" style="--p:1"></span>
+    <a class="nav__logo" href="./">Borghese<small>Camere &amp; Suite</small></a>
+    <a class="btn btn--ghost" href="./">← Torna al sito</a>
+  </header>
+
+  <main id="main" class="booking">
+    <header class="booking__head">
+      <p class="eyebrow">Prenotazione diretta · demo</p>
+      <h1 class="display">Prenota il tuo <em>colore.</em></h1>
+      <p class="booking__sub">Nessuna commissione, conferma immediata, paghi in struttura. Le disponibilità sono simulate: prova pure.</p>
+    </header>
+
+    <ol class="stepper" aria-label="Passaggi della prenotazione">
+      <li><button type="button" data-goto="1" aria-current="step"><span class="mono">01</span> Date</button></li>
+      <li><button type="button" data-goto="2" disabled><span class="mono">02</span> Camera</button></li>
+      <li><button type="button" data-goto="3" disabled><span class="mono">03</span> Dati</button></li>
+      <li><button type="button" data-goto="4" disabled><span class="mono">04</span> Conferma</button></li>
+    </ol>
+
+    <div class="booking__grid">
+      <div class="booking__steps">
+        <!-- STEP 1 -->
+        <section class="step" data-step="1" aria-labelledby="s1-title">
+          <h2 id="s1-title" class="step__title" tabindex="-1">Quando arrivi?</h2>
+          <div class="cal" data-cal>
+            <div class="cal__nav">
+              <button type="button" class="cal__arrow" data-cal-prev aria-label="Mese precedente">←</button>
+              <p class="cal__hint mono" data-cal-hint aria-live="polite">Scegli la data di arrivo</p>
+              <button type="button" class="cal__arrow" data-cal-next aria-label="Mese successivo">→</button>
+            </div>
+            <div class="cal__months" data-cal-months></div>
+            <ul class="cal__legend mono">
+              <li><i class="lg lg--free"></i>Disponibile</li>
+              <li><i class="lg lg--sel"></i>Il tuo soggiorno</li>
+              <li><i class="lg lg--full"></i>Tutto esaurito</li>
+            </ul>
+          </div>
+
+          <div class="guests">
+            <div class="guests__row">
+              <div>
+                <p class="guests__label">Adulti</p>
+                <p class="guests__help">Massimo 2 per camera</p>
+              </div>
+              <div class="stepper-num" role="group" aria-label="Numero di adulti">
+                <button type="button" data-adults="-1" aria-label="Meno un adulto">−</button>
+                <output data-adults-out aria-live="polite">2</output>
+                <button type="button" data-adults="1" aria-label="Più un adulto">+</button>
+              </div>
+            </div>
+            <label class="guests__row guests__row--check">
+              <span><span class="guests__label">Culla per neonato</span><span class="guests__help">0–2 anni, gratuita su richiesta</span></span>
+              <input type="checkbox" data-crib>
+            </label>
+          </div>
+
+          <div class="step__actions">
+            <button class="btn btn--xl" type="button" data-next="2" disabled>Vedi le camere libere <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="step" data-step="2" aria-labelledby="s2-title" hidden>
+          <h2 id="s2-title" class="step__title" tabindex="-1">Scegli la camera</h2>
+          <p class="step__lead" data-rooms-lead></p>
+          <div class="rooms-pick" data-rooms-pick role="radiogroup" aria-labelledby="s2-title"></div>
+          <p class="field__error" data-room-error role="alert"></p>
+          <div class="step__actions">
+            <button class="btn btn--ghost" type="button" data-goto="1">← Date</button>
+            <button class="btn btn--xl" type="button" data-next="3" disabled>Continua <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="step" data-step="3" aria-labelledby="s3-title" hidden>
+          <h2 id="s3-title" class="step__title" tabindex="-1">I tuoi dati</h2>
+          <form class="form" data-form novalidate>
+            <div class="field"><label for="f-first">Nome</label><input id="f-first" name="firstName" autocomplete="given-name" required><p class="field__error" data-error="firstName"></p></div>
+            <div class="field"><label for="f-last">Cognome</label><input id="f-last" name="lastName" autocomplete="family-name" required><p class="field__error" data-error="lastName"></p></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" data-error="email"></p></div>
+            <div class="field"><label for="f-phone">Telefono</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+39 …" required><p class="field__error" data-error="phone"></p></div>
+            <div class="field"><label for="f-arrival">Orario di arrivo</label>
+              <select id="f-arrival" name="arrival">
+                <option value="15:00–16:00">15:00 – 16:00</option><option value="16:00–17:00">16:00 – 17:00</option><option value="17:00–18:00" selected>17:00 – 18:00</option><option value="18:00–19:00">18:00 – 19:00</option><option value="19:00–20:00">19:00 – 20:00</option><option value="dopo le 20:00">Dopo le 20:00 (da concordare)</option>
+              </select>
+            </div>
+            <fieldset class="field field--full pay">
+              <legend>Pagamento</legend>
+              <label class="pay__opt"><input type="radio" name="payment" value="struttura" checked><span><b>In struttura</b><small>Contanti o carta al check-in</small></span></label>
+              <label class="pay__opt"><input type="radio" name="payment" value="bonifico"><span><b>Bonifico anticipato</b><small>Ricevi l'IBAN via email</small></span></label>
+            </fieldset>
+            <div class="field field--full"><label for="f-notes">Richieste (facoltativo)</label><textarea id="f-notes" name="notes" rows="3" placeholder="Es. arrivo per un concerto all'Inalpi Arena, culla, check-in tardivo…"></textarea></div>
+            <p class="field__error field--full" data-error="dates" role="alert"></p>
+            <div class="step__actions field--full">
+              <button class="btn btn--ghost" type="button" data-goto="2">← Camera</button>
+              <button class="btn btn--xl btn--led" type="submit">Conferma prenotazione <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="step step--done" data-step="4" aria-labelledby="s4-title" hidden tabindex="-1">
+          <p class="eyebrow">Prenotazione confermata</p>
+          <h2 id="s4-title" class="display" data-done-title>Grazie.</h2>
+          <div class="ticket" data-ticket></div>
+          <div class="step__actions">
+            <a class="btn" href="#" data-ics download="borghese-prenotazione.ics">Aggiungi al calendario</a>
+            <a class="btn btn--ghost" href="gestione.html">Vedi nel pannello gestore</a>
+            <a class="btn btn--ghost" href="./">Torna al sito</a>
+          </div>
+        </section>
+      </div>
+
+      <aside class="summary" aria-label="Riepilogo" data-summary>
+        <div class="summary__media" data-sum-media><span class="mono">Nessuna camera scelta</span></div>
+        <div class="summary__body">
+          <p class="eyebrow" data-sum-type>Il tuo soggiorno</p>
+          <p class="summary__room" data-sum-room>Borghese</p>
+          <dl class="summary__rows">
+            <div><dt>Arrivo</dt><dd data-sum-in>—</dd></div>
+            <div><dt>Partenza</dt><dd data-sum-out>—</dd></div>
+            <div><dt>Ospiti</dt><dd data-sum-guests>2 adulti</dd></div>
+          </dl>
+          <div class="summary__price" data-sum-price hidden>
+            <div class="summary__line"><span data-sum-nights></span><span data-sum-sub></span></div>
+            <div class="summary__line summary__line--portal"><span>Sui portali</span><s data-sum-portal></s></div>
+            <div class="summary__total"><span>Totale</span><b data-sum-total></b></div>
+            <p class="summary__save"><span class="led"></span><span data-sum-save></span></p>
+          </div>
+          <p class="summary__note">Check-in 15:00–20:00 · Check-out 08:00–10:00<br>Tassa di soggiorno da saldare in struttura.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer footer--slim">
+    <div class="footer__bottom mono">
+      <span>Borghese · Via Gradisca 83, 10136 Torino · CIN IT001272C2VYPZE827</span>
+      <span>Sito dimostrativo · nessun pagamento reale</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script type="module" src="assets/js/booking.js"></script>
+</body>
+</html>
