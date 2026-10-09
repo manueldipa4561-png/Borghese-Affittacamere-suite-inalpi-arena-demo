@@ -8,6 +8,8 @@ if (!location.hash) scrollTo(0, 0);
 const { lenis } = initSite();
 
 const SLIDE_MS = 3400;
+const FONT_WAIT_MS = 700;
+const LOADER_SAFETY_MS = 5000;
 const ROOM_DOTS = { Salvia: "#7fa874", Turchese: "#2bb3c4", Cipria: "#e79a8c", Ardesia: "#3b4349" };
 
 initQuickbook();
@@ -28,9 +30,9 @@ if (!gsap || !ScrollTrigger) {
     document.querySelectorAll(".bars").forEach((el) => el.classList.add("is-in"));
     initRoomColors();
   } else {
-    gsap.set("[data-hero-media]", { "--rise": 1 });
+    const intro = prepareHero(); // stati iniziali impostati subito: niente flash quando il loader si apre
     runLoader().then(() => {
-      introHero();
+      intro.play();
       slideshow.start();
     });
     heroScroll();
@@ -46,33 +48,41 @@ if (!gsap || !ScrollTrigger) {
   addEventListener("load", () => ScrollTrigger.refresh());
 }
 
-// ---------- loader
+// ---------- loader (~2s totali: font max 0.7s, contatore 1.1s, apertura 0.9s in sovrapposizione all'intro)
 function runLoader() {
   const loader = document.querySelector(".loader");
   if (!loader) return Promise.resolve();
+  const html = document.documentElement;
+  const unlock = () => { html.classList.remove("is-loading"); lenis?.start(); };
+  html.classList.add("is-loading");
   lenis?.stop();
+  setTimeout(unlock, LOADER_SAFETY_MS); // se qualcosa va storto lo scroll non resta bloccato
   const count = loader.querySelector("[data-loader-count]");
   const progress = { v: 0 };
-  const fontsReady = Promise.race([document.fonts?.ready, new Promise((r) => setTimeout(r, 1500))]);
+  const fontsReady = Promise.race([document.fonts?.ready, new Promise((r) => setTimeout(r, FONT_WAIT_MS))]);
   return fontsReady.then(() => new Promise((resolve) => {
-    gsap.timeline({ onComplete: () => { loader.remove(); lenis?.start(); } })
-      .from(".loader__word", { yPercent: 60, opacity: 0, duration: 1.2, ease: "expo.out" }, 0)
-      .to(progress, { v: 100, duration: 1.5, ease: "power2.inOut", onUpdate: () => (count.textContent = String(Math.round(progress.v)).padStart(2, "0")) }, 0)
-      .fromTo(".loader__led", { scaleX: 0 }, { scaleX: 1, duration: 1.5, ease: "power2.inOut" }, 0)
-      .add(resolve, "+=0.05")
-      .to(loader, { clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "expo.inOut" }, "<");
+    gsap.timeline({ onComplete: () => { loader.remove(); unlock(); } })
+      .from(".loader__word", { yPercent: 60, opacity: 0, duration: 0.9, ease: "expo.out" }, 0)
+      .to(progress, { v: 100, duration: 1.1, ease: "power2.inOut", onUpdate: () => (count.textContent = String(Math.round(progress.v)).padStart(2, "0")) }, 0)
+      .fromTo(".loader__led", { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: "power2.inOut" }, 0)
+      .add(resolve)
+      .to(".loader__word, .loader__count", { yPercent: -60, opacity: 0, duration: 0.6, ease: "power2.in" }, "<")
+      .to(loader, { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, "<0.1");
   }));
 }
 
 // ---------- hero (la geometria dell'arco vive nel CSS, qui si animano solo --rise e --open)
-function introHero() {
-  const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-  tl.to("[data-hero-media]", { "--rise": 0, duration: 1.6 }, 0);
-  if (SplitText) {
-    const split = SplitText.create("[data-hero-word]", { type: "chars", mask: "chars" });
-    tl.from(split.chars, { yPercent: 105, duration: 1.4, stagger: 0.045 }, 0.1);
-  }
-  tl.from(".hero__top > *, .hero__intro > *, .quickbook", { y: 24, opacity: 0, duration: 1.1, stagger: 0.08 }, 0.5);
+function prepareHero() {
+  const media = document.querySelector("[data-hero-media]");
+  const ui = gsap.utils.toArray(".hero__top > *, .hero__intro > *, .quickbook");
+  const chars = SplitText ? SplitText.create("[data-hero-word]", { type: "chars", mask: "chars" }).chars : [];
+  gsap.set(media, { "--rise": 1 });
+  gsap.set(chars, { yPercent: 105 });
+  gsap.set(ui, { autoAlpha: 0, y: 24 });
+  return gsap.timeline({ paused: true, defaults: { ease: "expo.out" } })
+    .to(media, { "--rise": 0, duration: 1.5 }, 0.1)
+    .to(chars, { yPercent: 0, duration: 1.3, stagger: 0.04 }, 0)
+    .to(ui, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.07 }, 0.45);
 }
 
 function heroScroll() {

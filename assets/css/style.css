@@ -73,6 +73,7 @@ a { color: inherit; }
 @keyframes led-border { to { background-position: 0 0, -200% 0; } }
 
 /* ---------- loader */
+html.is-loading { overflow: hidden; } /* niente scroll (anche touch) mentre gira il loader */
 .loader { display: none; }
 .js .loader {
   position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
@@ -125,20 +126,25 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
 
 /* ---------- hero */
 .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; background: var(--hero-tint, #dfe8da); transition: background-color 1.4s var(--ease); }
-/* Arco (i portici di Torino). GSAP anima solo --rise (1 = chiuso, intro) e --open (1 = schermo pieno, scroll). */
+/* Arco (i portici di Torino). GSAP anima solo --rise (1 = arco sotto lo schermo, intro) e --open (1 = schermo pieno, scroll).
+   La foto ha lo stesso box dell'arco: sale intera da dietro la scritta e mostra la camera, non un dettaglio zoomato. */
 .hero__media {
   position: absolute; inset: 0; z-index: 1;
   --w: min(28vw, 520px); --t: 17svh; --b: 23svh;
   --rise: 0; --open: 0;
   --k: calc(1 - var(--open));
-  clip-path: inset(
-    calc((var(--t) + (100svh - var(--t) - var(--b)) * var(--rise)) * var(--k))
-    calc((100vw - var(--w)) / 2 * var(--k))
-    calc(var(--b) * var(--k))
-    round calc(var(--w) / 2 * var(--k)) calc(var(--w) / 2 * var(--k)) 0 0
-  );
+  --shift: calc((100svh - var(--t)) * var(--rise));
+  --top: calc((var(--t) + var(--shift)) * var(--k));
+  --bottom: calc((var(--b) - var(--shift)) * var(--k));
+  --side: calc((100vw - var(--w)) / 2 * var(--k));
+  --round: calc(var(--w) / 2 * var(--k));
+  clip-path: inset(var(--top) var(--side) var(--bottom) round var(--round) var(--round) 0 0);
 }
-.hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity 1.4s var(--ease), transform 7s linear; }
+.hero__media img {
+  position: absolute; top: var(--top); left: var(--side);
+  width: calc(100% - 2 * var(--side)); height: calc(100% - var(--top) - var(--bottom)); max-width: none;
+  object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity 1.4s var(--ease), transform 7s linear;
+}
 .hero__media img.is-active { opacity: 1; transform: scale(1); }
 .hero__top { position: absolute; z-index: 3; top: calc(var(--nav-h) + 20px); left: var(--gutter); right: var(--gutter); display: flex; justify-content: space-between; align-items: flex-start; }
 .hero__room { text-align: right; }
@@ -245,7 +251,7 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
 .map__home circle { fill: #f472b6; }
 .map__home text { font: 400 40px var(--serif); text-transform: none; letter-spacing: 0; }
 .map__pulse { fill: rgba(244, 114, 182, 0.28); transform-box: fill-box; transform-origin: center; animation: pulse 2.6s var(--ease) infinite; }
-.map__label { fill: #ffc371 !important; font-size: 15px !important; }
+.map text.map__label { fill: #ffc371; font-size: 15px; }
 .map__route { filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.7)); }
 .map figcaption { margin-top: 8px; color: rgba(243, 239, 230, 0.6); font-size: 11px; text-align: right; }
 @keyframes pulse { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
@@ -305,7 +311,7 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
     animation: led-border 6s linear infinite; transform: translateY(160%); transition: transform 0.6s var(--ease);
   }
   .mobile-book.is-visible { transform: none; }
-  .hero__media { --w: 74vw; --t: 21svh; --b: 37svh; }
+  .hero__media { --w: 84vw; --t: 19svh; --b: 36svh; }
   .hero__word { font-size: 25vw; }
   .hero__foot { bottom: calc(21vw + 10px); justify-content: center; text-align: center; }
   .hero__intro { max-width: 100%; }
@@ -323,6 +329,11 @@ body.menu-open .nav { color: var(--paper); background: transparent; backdrop-fil
   .details__track li { scroll-snap-align: center; }
   .details__hint { display: none; }
   .amenities__list { columns: 1; }
+  /* la mappa si rimpicciolisce ~0.6x: testi SVG più grandi, etichette secondarie nascoste */
+  .map text { font-size: 24px; }
+  .map text.map__label { font-size: 26px; }
+  .map__home text { font-size: 66px; }
+  .map__poi--minor text { display: none; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer { padding-bottom: 96px; }
 }
