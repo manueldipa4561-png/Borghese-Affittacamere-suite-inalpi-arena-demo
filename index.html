@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <script>document.documentElement.classList.add("js")</script>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BedAndBreakfast","name":"Borghese Affittacamere suite inalpi arena","address":{"@type":"PostalAddress","streetAddress":"Via Gradisca 83","postalCode":"10136","addressLocality":"Torino","addressCountry":"IT"},"geo":{"@type":"GeoCoordinates","latitude":45.0473,"longitude":7.6434},"checkinTime":"15:00","checkoutTime":"10:00","aggregateRating":{"@type":"AggregateRating","ratingValue":"9.4","bestRating":"10","reviewCount":"116"},"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Wi-Fi gratuito","value":true},{"@type":"LocationFeatureSpecification","name":"Aria condizionata","value":true},{"@type":"LocationFeatureSpecification","name":"Terrazza","value":true}]}
+  {"@context":"https://schema.org","@type":"BedAndBreakfast","name":"Borghese Affittacamere suite inalpi arena","address":{"@type":"PostalAddress","streetAddress":"Via Gradisca 83","postalCode":"10136","addressLocality":"Torino","addressCountry":"IT"},"geo":{"@type":"GeoCoordinates","latitude":45.0473,"longitude":7.6434},"checkinTime":"15:00","checkoutTime":"10:00","aggregateRating":{"@type":"AggregateRating","ratingValue":"9.6","bestRating":"10","reviewCount":"116"},"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Wi-Fi gratuito","value":true},{"@type":"LocationFeatureSpecification","name":"Aria condizionata","value":true},{"@type":"LocationFeatureSpecification","name":"Terrazza","value":true}]}
   </script>
 </head>
 <body>
@@ -41,7 +41,7 @@
       <a href="#recensioni">Recensioni</a>
       <a href="#info">Info</a>
     </nav>
-    <a class="btn btn--led nav__cta" href="prenota.html">Prenota diretto</a>
+    <a class="btn btn--led nav__cta" href="prenota.html" data-wa>Prenota subito</a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
   </header>
 
@@ -53,12 +53,12 @@
       <a href="#zona">Zona</a>
       <a href="#recensioni">Recensioni</a>
       <a href="#info">Info pratiche</a>
-      <a href="prenota.html" class="menu__book">Prenota diretto →</a>
+      <a href="prenota.html" class="menu__book" data-wa>Prenota subito →</a>
       <p class="menu__contact"><a data-contact="phone" href="#">Telefono</a> · <a data-contact="whatsapp" href="#">WhatsApp</a></p>
     </nav>
   </div>
 
-  <a class="mobile-book" href="prenota.html"><span>Prenota diretto</span><span class="mono">da 85 € / notte</span></a>
+  <a class="mobile-book" href="prenota.html" data-wa><span>Prenota subito su WhatsApp</span><span class="mono">da 85 €</span></a>
 
   <main id="main">
     <!-- HERO -->
@@ -83,15 +83,15 @@
       <div class="hero__foot">
         <div class="hero__intro">
           <p class="hero__lead">Quattro camere, quattro colori. <em>A 950 metri dall'Inalpi Arena.</em></p>
-          <a class="score" href="#recensioni"><b>9,4</b><span>su 10<br>116 recensioni</span></a>
+          <a class="score" href="#recensioni" aria-label="Valutazione 9,6 su 10, 116 recensioni su Booking.com"><b>9,6</b><span>su 10 · Booking.com<br>116 recensioni</span></a>
         </div>
-        <form class="quickbook" action="prenota.html" method="get" aria-label="Verifica disponibilità">
+        <form class="quickbook" action="prenota.html" method="get" aria-label="Prenota subito su WhatsApp" data-wa-form>
           <label><span class="mono">Arrivo</span><input type="date" name="arrivo" required data-min-today></label>
           <label><span class="mono">Partenza</span><input type="date" name="partenza" required data-min-today></label>
           <label><span class="mono">Ospiti</span>
             <select name="adulti"><option value="1">1 adulto</option><option value="2" selected>2 adulti</option><option value="3">3 adulti</option><option value="4">4 adulti</option><option value="5">5 adulti</option><option value="6">6 adulti</option><option value="7">7 adulti</option><option value="8">8 adulti</option></select>
           </label>
-          <button class="btn" type="submit" data-cursor="Prenota">Verifica <span aria-hidden="true">→</span></button>
+          <button class="btn" type="submit" data-cursor="WhatsApp">Prenota su WhatsApp <span aria-hidden="true">→</span></button>
         </form>
       </div>
     </section>
@@ -126,13 +126,14 @@
       <article class="room" data-room-color="#c9d8c1" data-room-fg="#16181a" id="salvia">
         <div class="room__text">
           <p class="room__index mono">01 / 04</p>
+          <p class="room__score"><b>9,6</b><span class="mono">su 10 · media ospiti<br>su Booking.com</span></p>
           <h3 class="room__name">Salvia</h3>
           <p class="room__type mono">Matrimoniale Deluxe con balcone · letto queen</p>
           <p class="room__blurb">Verde salvia, boiserie in rovere e una striscia di luce che cambia colore sopra la testiera. Si apre su un balcone sulla via.</p>
           <ul class="chips"><li>Balcone</li><li>Bagno in marmo</li><li>Doccia walk-in</li><li>Scrivania</li></ul>
           <div class="room__book">
             <p class="room__price"><span class="mono">da</span> 89 € <span class="mono">/ notte</span></p>
-            <a class="btn" href="prenota.html?camera=salvia" data-cursor="Prenota">Prenota Salvia <span aria-hidden="true">→</span></a>
+            <a class="btn" href="prenota.html?camera=salvia" data-wa data-wa-room="Salvia" data-cursor="WhatsApp">Prenota Salvia su WhatsApp <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <div class="room__media">
@@ -145,13 +146,14 @@
       <article class="room" data-room-color="#86cfd8" data-room-fg="#16181a" id="turchese">
         <div class="room__text">
           <p class="room__index mono">02 / 04</p>
+          <p class="room__score"><b>9,6</b><span class="mono">su 10 · media ospiti<br>su Booking.com</span></p>
           <h3 class="room__name">Turchese</h3>
           <p class="room__type mono">Doppia twin con balcone · letti unibili</p>
           <p class="room__blurb">La camera degli amici e dei colleghi: due letti che diventano uno, poltrona in velluto e un muro turchese che si accende la sera.</p>
           <ul class="chips"><li>Balcone</li><li>Letti separabili</li><li>Bagno in marmo</li><li>Poltrona</li></ul>
           <div class="room__book">
             <p class="room__price"><span class="mono">da</span> 85 € <span class="mono">/ notte</span></p>
-            <a class="btn" href="prenota.html?camera=turchese" data-cursor="Prenota">Prenota Turchese <span aria-hidden="true">→</span></a>
+            <a class="btn" href="prenota.html?camera=turchese" data-wa data-wa-room="Turchese" data-cursor="WhatsApp">Prenota Turchese su WhatsApp <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <div class="room__media">
@@ -164,13 +166,14 @@
       <article class="room" data-room-color="#efcfc7" data-room-fg="#16181a" id="cipria">
         <div class="room__text">
           <p class="room__index mono">03 / 04</p>
+          <p class="room__score"><b>9,6</b><span class="mono">su 10 · media ospiti<br>su Booking.com</span></p>
           <h3 class="room__name">Cipria</h3>
           <p class="room__type mono">Matrimoniale Superior · letto queen</p>
           <p class="room__blurb">Rosa cipria e legno chiaro, specchi esagonali e luce calda radente. La più luminosa, pensata per le coppie.</p>
           <ul class="chips"><li>Bagno in marmo</li><li>Doccia walk-in</li><li>Accappatoi</li><li>Smart TV</li></ul>
           <div class="room__book">
             <p class="room__price"><span class="mono">da</span> 95 € <span class="mono">/ notte</span></p>
-            <a class="btn" href="prenota.html?camera=cipria" data-cursor="Prenota">Prenota Cipria <span aria-hidden="true">→</span></a>
+            <a class="btn" href="prenota.html?camera=cipria" data-wa data-wa-room="Cipria" data-cursor="WhatsApp">Prenota Cipria su WhatsApp <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <div class="room__media">
@@ -183,13 +186,14 @@
       <article class="room" data-room-color="#3b4349" data-room-fg="#f3efe6" id="ardesia">
         <div class="room__text">
           <p class="room__index mono">04 / 04</p>
+          <p class="room__score"><b>9,6</b><span class="mono">su 10 · media ospiti<br>su Booking.com</span></p>
           <h3 class="room__name">Ardesia</h3>
           <p class="room__type mono">Matrimoniale Deluxe · letto queen</p>
           <p class="room__blurb">Grigio ardesia, terracotta e listelli scuri. La camera più raccolta: per chi torna tardi da un concerto e vuole solo buio e silenzio.</p>
           <ul class="chips"><li>Bagno in marmo</li><li>Poltrona in velluto</li><li>Scrivania</li><li>Specchi esagonali</li></ul>
           <div class="room__book">
             <p class="room__price"><span class="mono">da</span> 99 € <span class="mono">/ notte</span></p>
-            <a class="btn btn--light" href="prenota.html?camera=ardesia" data-cursor="Prenota">Prenota Ardesia <span aria-hidden="true">→</span></a>
+            <a class="btn btn--light" href="prenota.html?camera=ardesia" data-wa data-wa-room="Ardesia" data-cursor="WhatsApp">Prenota Ardesia su WhatsApp <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <div class="room__media">
@@ -267,7 +271,7 @@
       <div class="faq">
         <details>
           <summary>Arrivo dopo le 20:00?</summary>
-          <p>Il check-in è dalle 15:00 alle 20:00. Se arrivi più tardi (volo serale, concerto) segnalalo nella prenotazione: con il check-in express ti mandiamo le istruzioni per entrare. Il check-out è entro le 10:00.</p>
+          <p>Il check-in è dalle 15:00 alle 20:00. Se arrivi più tardi (volo serale, concerto) segnalalo nel messaggio: con il check-in express ti mandiamo le istruzioni per entrare. Il check-out è entro le 10:00.</p>
         </details>
         <details>
           <summary>Si può rientrare tardi dopo un concerto?</summary>
@@ -291,7 +295,7 @@
         </details>
         <details>
           <summary>Siamo un gruppo</summary>
-          <p>Puoi prenotare fino a 4 camere insieme per le stesse date: indica quanti siete e il sistema ti propone le camere libere.</p>
+          <p>Scrivici su WhatsApp quanti siete e per quali date: ti proponiamo le camere libere (fino a 4 insieme) e ti mandiamo un unico preventivo.</p>
         </details>
         <details>
           <summary>Accessibilità</summary>
@@ -313,7 +317,7 @@
       <aside class="info__en" lang="en" aria-label="Information in English">
         <p class="eyebrow">For international guests</p>
         <p>Four renovated rooms with private marble bathrooms, 950 m (≈12 min walk) from the Inalpi Arena. Check-in 15:00–20:00, late arrivals on request · no breakfast · no parking · no pets · max 2 guests per room, free cot 0–2 · pay at the property, free cancellation up to 48 h before arrival.</p>
-        <a class="btn btn--led" href="prenota.html?lang=en">Book in English <span aria-hidden="true">→</span></a>
+        <a class="btn btn--led" href="prenota.html?lang=en" data-wa data-wa-lang="en">Book on WhatsApp <span aria-hidden="true">→</span></a>
       </aside>
     </section>
 
@@ -365,7 +369,7 @@
     <section class="reviews" id="recensioni">
       <div class="reviews__score">
         <p class="eyebrow">Gli ospiti</p>
-        <p class="reviews__big">9,4</p>
+        <p class="reviews__big">9,6</p>
         <p class="mono">su 10 · 116 recensioni verificate</p>
       </div>
       <ul class="bars" data-bars>
@@ -396,11 +400,11 @@
       <p class="eyebrow">Prenotazione diretta</p>
       <h2 class="cta__title" data-split>Prenota <em>diretto.</em></h2>
       <ul class="cta__perks">
-        <li><b>−10%</b> rispetto ai portali, sempre</li>
-        <li><b>Zero</b> commissioni, conferma immediata</li>
+        <li><b>0%</b> commissioni sul prezzo che ti diamo</li>
+        <li><b>1</b> messaggio su WhatsApp e ricevi il preventivo</li>
         <li><b>Una</b> persona da contattare: <a data-contact="phone" href="#">chiama il gestore</a></li>
       </ul>
-      <a class="btn btn--light btn--xl" href="prenota.html" data-cursor="Prenota">Scegli le date <span aria-hidden="true">→</span></a>
+      <a class="btn btn--light btn--xl" href="prenota.html" data-wa data-cursor="WhatsApp">Prenota subito su WhatsApp <span aria-hidden="true">→</span></a>
     </section>
   </main>
 
@@ -414,6 +418,7 @@
     </div>
     <div class="footer__bottom mono">
       <span>Sito dimostrativo · prenotazioni simulate</span>
+      <a href="prenota.html">Prenotazione online (demo)</a>
       <a href="gestione.html">Area gestore</a>
       <span>Design &amp; sviluppo Punto Due Studio</span>
     </div>

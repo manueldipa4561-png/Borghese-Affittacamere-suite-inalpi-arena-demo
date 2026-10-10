@@ -3,6 +3,33 @@ import { PROPERTY } from "./data.js";
 
 export const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// ---------- WhatsApp: messaggio già scritto con camera, date e ospiti
+const WA_TEXT = {
+  it: { base: "Ciao, vorrei prenotare da Borghese", room: " la camera {room}", dates: " dal {in} al {out}", guests: " per {n} {w}", ask: ". È disponibile? Grazie!", askAny: ". Potete dirmi la disponibilità? Grazie!", one: "persona", many: "persone" },
+  en: { base: "Hi, I'd like to book at Borghese", room: " the {room} room", dates: " from {in} to {out}", guests: " for {n} {w}", ask: ". Is it available? Thank you!", askAny: ". Could you tell me what's available? Thank you!", one: "guest", many: "guests" },
+};
+const waDate = (iso) => iso.split("-").reverse().join("/"); // 2026-11-15 → 15/11/2026
+const fill = (tpl, vars) => tpl.replace(/\{(\w+)\}/g, (_, k) => vars[k]);
+
+export function whatsappUrl({ room, arrivo, partenza, adulti, lang = "it" } = {}) {
+  const t = WA_TEXT[lang] ?? WA_TEXT.it;
+  const n = Number(adulti);
+  let text = t.base;
+  if (room) text += fill(t.room, { room });
+  if (arrivo && partenza) text += fill(t.dates, { in: waDate(arrivo), out: waDate(partenza) });
+  if (n >= 1) text += fill(t.guests, { n, w: n === 1 ? t.one : t.many });
+  text += arrivo && partenza ? t.ask : t.askAny;
+  return `https://wa.me/${PROPERTY.whatsapp}?text=${encodeURIComponent(text)}`;
+}
+
+// Ogni [data-wa] è un pulsante "Prenota subito": l'href statico (pagina di prenotazione) resta come ripiego senza JS
+function fillWhatsApp() {
+  document.querySelectorAll("[data-wa]").forEach((el) => {
+    el.href = whatsappUrl({ room: el.dataset.waRoom, lang: el.dataset.waLang });
+    Object.assign(el, { target: "_blank", rel: "noopener" });
+  });
+}
+
 // Ogni [data-contact="phone|whatsapp|email"] diventa un link vero, dati presi da data.js
 function fillContacts() {
   const links = {
@@ -40,6 +67,7 @@ export function initSite() {
   }
 
   fillContacts();
+  fillWhatsApp();
   initNav();
   initMenu(lenis);
   initAnchors(lenis);

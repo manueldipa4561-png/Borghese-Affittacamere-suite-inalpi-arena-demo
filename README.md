@@ -8,7 +8,7 @@ Demo of the website for **Borghese Affittacamere suite inalpi arena** (Via Gradi
 
 | Page | What it does |
 | --- | --- |
-| `index.html` | Home: loader, hero with an arch mask (Turin's porticoes) and a slideshow of the 4 rooms, distances marquee, manifesto, rooms where the background **takes on the colour of the room in view**, horizontal details gallery, terrace with a clip-path reveal, amenities, area map with the LED route to the Inalpi Arena, reviews, "Prenota diretto" CTA. |
+| `index.html` | Home ("Prenota subito" buttons open **WhatsApp** with a pre-written message: room, dates, guests; the online booking below is kept as a secondary demo): loader, hero with an arch mask (Turin's porticoes) and a slideshow of the 4 rooms, distances marquee, manifesto, rooms where the background **takes on the colour of the room in view**, horizontal details gallery, terrace with a clip-path reveal, amenities, area map with the LED route to the Inalpi Arena, reviews, "Prenota diretto" CTA. |
 | `prenota.html` | Booking in 4 steps, in Italian or English: guests (adults, children, infants) and calendar with availability → **one or more rooms** (up to 4, single booking code) → details (invoice, airport shuttle, late arrival) → confirmation with code and `.ics`. Alternative dates when the chosen ones are full, calendar usable by keyboard. Accepts `?arrivo=YYYY-MM-DD&partenza=YYYY-MM-DD&adulti=1-8&camera=salvia\|turchese\|cipria\|ardesia&lang=it\|en`. |
 | `gestione.html` | Owner area: KPIs (arrivals, occupancy, direct revenue, **commissions saved**), 21-day planning board by room and channel, bookings table with cancellation and demo reset. |
 
@@ -58,7 +58,8 @@ Libraries (CDN, pinned versions): GSAP 3.13 (ScrollTrigger, SplitText), Lenis 1.
 
 ## To complete with the owner before going live
 
-- [ ] Phone, WhatsApp, email: one point to change, `PROPERTY` in `assets/js/data.js` (placeholders today).
+- [ ] Phone, WhatsApp, email: one point to change, `PROPERTY` in `assets/js/data.js` (placeholders today). **The WhatsApp buttons point to a fake number until this is set.**
+- [ ] Confirm the 9.6 rating on the Booking.com listing.
 - [ ] Confirm the colour names of the rooms and how they map to the Booking.com types (Deluxe with balcony, Twin with balcony, Superior).
 - [ ] Real rates and a cancellation policy. The current rates are demo values, and the "−10% compared with the portals" is a proposal.
 - [ ] Official photos or permission to use the ones from the listings. The current photos come from the public listings, and 4 have been upscaled to 4K with Higgsfield.
@@ -69,7 +70,7 @@ Libraries (CDN, pinned versions): GSAP 3.13 (ScrollTrigger, SplitText), Lenis 1.
 
 ## Identification data (from the public listings)
 
-CIN IT001272C2VYPZE827 · CIR 00127207231 · Check-in 15:00–20:00 · Check-out 08:00–10:00 · Rating 9.4/10 (116 reviews).
+CIN IT001272C2VYPZE827 · CIR 00127207231 · Check-in 15:00–20:00 · Check-out 08:00–10:00 · Rating 9.6/10 per the owner (116 reviews; the Booking page I read showed 9.4, to be confirmed).
 
 ---
 Design & development: Punto Due Studio.

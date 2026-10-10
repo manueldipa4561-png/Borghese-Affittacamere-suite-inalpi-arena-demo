@@ -11,7 +11,7 @@ export const PROPERTY = {
   checkOut: "08:00 – 10:00",
   cin: "IT001272C2VYPZE827",
   cir: "00127207231",
-  rating: 9.4,
+  rating: 9.6, // media Booking.com indicata dal gestore: da verificare sulla scheda
   reviews: 116,
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=Via+Gradisca+83+10136+Torino",
   reviewsUrl: "https://www.booking.com/hotel/it/borghese-affittacamere-suite-inalpi-arena.html#tab-reviews",

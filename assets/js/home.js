@@ -1,5 +1,5 @@
 // Home: loader, hero ad arco, colori delle camere allo scroll, gallerie e contatori.
-import { initSite, reducedMotion } from "./site.js";
+import { initSite, reducedMotion, whatsappUrl } from "./site.js";
 
 const { gsap, ScrollTrigger, SplitText } = window;
 // l'intro parte dall'hero: niente ripristino della posizione dopo un refresh
@@ -256,10 +256,15 @@ function initQuotes() {
   track.classList.add("is-running");
 }
 
-// ---------- form rapido: date minime coerenti
+// ---------- form rapido: date minime coerenti, poi apre WhatsApp con il messaggio già scritto
 function initQuickbook() {
   const form = document.querySelector(".quickbook");
   if (!form) return;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const { arrivo, partenza, adulti } = Object.fromEntries(new FormData(form));
+    window.open(whatsappUrl({ arrivo, partenza, adulti }), "_blank", "noopener");
+  });
   const [arrive, depart] = form.querySelectorAll('input[type="date"]');
   const d = new Date();
   const iso = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
